@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "assessment_pages/show"
   get "forum_posts/index"
   get "forum_posts/show"
   get "forum_posts/new"
@@ -22,6 +23,7 @@ Rails.application.routes.draw do
   # Lessons routes
   resources :lessons, only: [:index, :show] do
     resources :content_pages, only: [:show] # Nested content pages under lessons
+    resources :assessment_pages, only: [:show] # Should only be one assesment page in lesson
   end
 
 
