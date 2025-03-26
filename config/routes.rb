@@ -8,20 +8,14 @@ Rails.application.routes.draw do
  post '/login', to: 'sessions#create'
  get "/logout", to: "sessions#destroy", as: '/logout'
 
- # Sign up route
- get '/signup', to: 'users#new', as: 'signup'
+  # Home Page
+  get '/home', to: 'home#index', as: 'home'
+  root 'home#index'
 
- # Other routes (home page, etc.)
- get '/home', to: 'home#index', as: 'home'
-
- # LessonS routes
- get "/lessons/:id", to: "lessons#show", as: "lesson"
- resources :lessons, only: [:index, :show]
-
- # Routes for content pages
-  resources :content_pages, only: [:show]
-
- root 'home#index'
+  # Lessons routes
+  resources :lessons, only: [:index, :show] do
+    resources :content_pages, only: [:show] # Nested content pages under lessons
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
