@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "forum_posts/index"
+  get "forum_posts/show"
+  get "forum_posts/new"
+  get "forum_posts/create"
   get "content_pages/show"
   get "lessons/index"
   get "lessons/show"
@@ -16,6 +20,16 @@ Rails.application.routes.draw do
   resources :lessons, only: [:index, :show] do
     resources :content_pages, only: [:show] # Nested content pages under lessons
   end
+
+
+# Forum Routes
+get 'forum/general_discussion', to: 'forum_posts#index', defaults: { category: 'general' }, as: 'general_discussion'
+get 'forum/help_support', to: 'forum_posts#index', defaults: { category: 'help' }, as: 'help_support'
+get 'forum/off_topic', to: 'forum_posts#index', defaults: { category: 'offtopic' }, as: 'off_topic'
+
+resources :forum_posts
+
+ root 'home#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
